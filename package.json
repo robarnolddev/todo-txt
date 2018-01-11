@@ -4,6 +4,7 @@
     "description": "Todo.txt file management",
     "version": "0.0.1",
     "publisher": "rarnoldmobile",
+    "icon": "images/todo.png",
     "engines": {
         "vscode": "^1.19.0"
     },
@@ -15,8 +16,7 @@
     ],
     "main": "./out/extension",
     "contributes": {
-        "commands": [
-        ]
+        "commands": []
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",
@@ -30,5 +30,12 @@
         "vscode": "^1.1.6",
         "@types/node": "^7.0.43",
         "@types/mocha": "^2.2.42"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/rarnoldmobile/todo-txt"
+    },
+    "dependencies": {
+        "path": "^0.12.7"
     }
 }

@@ -11,6 +11,8 @@
 
 Current features are very limited and focus solely on syntax highlighting and completed task formatting for todo.txt formats.  See the roadmap for full feature plans.
 
+Please see [todo.txt](http://todotxt.org) for full features and functionality of the todo.txt format.
+
 ## Feature Roadmap
 
 Soon:
