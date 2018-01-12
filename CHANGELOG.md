@@ -4,7 +4,11 @@ All notable changes to the "todo-txt" extension will be documented in this file.
 
 todo-txt follows semantic versioning for all releases.
 
-## [Unreleased]
+## [0.0.2] - 2018-01-10
+
+### Fixed
+
+Fixed inadvertant issue with extension not activating on windows machines
 
 ## [0.0.1] - 2018-01-10
 

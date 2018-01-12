@@ -1,6 +1,8 @@
 import * as vscode from 'vscode';
 import { window, Range } from 'vscode';
 import StyleConstants from './StyleConstants';
+import * as path from 'path';
+import AppConstants from './AppConstants';
 
 export default class ToDoDecorator {
 
@@ -69,8 +71,9 @@ export default class ToDoDecorator {
         if (window.activeTextEditor != undefined) {
 
             // Only Decorate Document if it's in the classic filenaming convention
-            let fileName = window.activeTextEditor.document.fileName;
-            if (fileName.endsWith('/todo.txt') || fileName.endsWith('/done.txt')) {
+            let fileName = path.basename(window.activeTextEditor.document.fileName);
+            
+            if (AppConstants.ACCEPTED_FILENAMES.lastIndexOf(fileName) >= 0) {
                // Iterate over each line and parse accordingl∏
                 let totalLines = window.activeTextEditor.document.lineCount;
                 for (var i = 0; i <= totalLines - 1; i++) {
