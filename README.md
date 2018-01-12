@@ -1,6 +1,7 @@
 # todo-txt README
 
 - [Features](#features)
+    - [Commands](#commands)
 - [Feature Roadmap](#feature-roadmap)
 - [Requirements](#requirements)
 - [Extension Settings](#extension-settings)
@@ -9,7 +10,15 @@
 
 ## Features
 
-Current features are very limited and focus solely on syntax highlighting and completed task formatting for todo.txt formats.  See the roadmap for full feature plans.
+- Syntax highlighting for todo.txt and done.txt files
+- Commands
+
+### Commands
+
+The current command pallete is:
+
+`todo-txt: Toggle Task Completion`: Toggle the completion state of the current task line  
+`todo-txt: Archive Completed Tasks`: Migrate all completed tasks to a done.txt file in the current directory
 
 Please see [todo.txt](http://todotxt.org) for full features and functionality of the todo.txt format.
 
@@ -17,13 +26,12 @@ Please see [todo.txt](http://todotxt.org) for full features and functionality of
 
 Soon:
 
-- Configurable colors
-- Very basic shortcut commands (toggle task completion, create a new task)
+- Configurable colors + filename conventions
+- Various Commands (unarchive task)
 - Tests!
 
 Not-As-Soon:
 
-- Auto Archiving into done.txt files
 - Sorting function (by project, due date, priority)
 
 ## Requirements
