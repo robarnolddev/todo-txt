@@ -24,6 +24,10 @@
             {
                 "command": "extension.archiveTasks",
                 "title": "todo-txt: Archive Completed Tasks"
+            },
+            {
+                "command": "extension.reactivateTask",
+                "title": "todo-txt: Reactivate Completed Task"
             }
         ]
     },
