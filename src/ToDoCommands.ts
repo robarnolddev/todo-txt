@@ -6,6 +6,11 @@ import * as fs from 'fs';
 import * as path from 'path';
 import AppConstants from './AppConstants';
 
+enum ArchiveType {
+    Archive,
+    Reactivate
+}
+
 export function ActivateCommands(context: vscode.ExtensionContext) {
 
     let toggleCompletion = vscode.commands.registerCommand('extension.toggleCompletion', () => {
@@ -13,10 +18,16 @@ export function ActivateCommands(context: vscode.ExtensionContext) {
     });
 
     let archiveTasks = vscode.commands.registerCommand('extension.archiveTasks', () => {
-        archiveCompletedTasks();
+        bulkArchiveTasks();
+    });
+
+    let reactivateCompletedTask = vscode.commands.registerCommand('extension.reactivateTask', () => {
+        reactivateTask();
     });
 
     context.subscriptions.push(toggleCompletion);
+    context.subscriptions.push(archiveTasks);
+    context.subscriptions.push(reactivateCompletedTask);
 }
 
 export function toggleCompletedTasks() {
@@ -38,12 +49,12 @@ export function toggleCompletedTasks() {
     editor.selection = new vscode.Selection(new vscode.Position(currLine, 0), new vscode.Position(currLine, 0));
 }
 
-export function archiveCompletedTasks() {
+export function bulkArchiveTasks() {
 
     const editor = vscode.window.activeTextEditor;
     let window = vscode.window;
     let currDoc = editor.document;
-    let doneFileName = path.dirname(currDoc.fileName) + path.sep + 'done.txt';
+    let destinationFileName = path.dirname(currDoc.fileName) + path.sep + AppConstants.ARCHIVE_FILENAME;
     let lineDeletes = [];
 
     if (path.basename(currDoc.fileName) != AppConstants.TODO_FILENAME) {
@@ -62,8 +73,7 @@ export function archiveCompletedTasks() {
             let lineObject = window.activeTextEditor.document.lineAt(i);
 
             if (isTaskComplete(currDoc.lineAt(i).text)) {
-                console.log(doneFileName);
-                fs.appendFileSync(doneFileName, lineObject.text + eol);
+                fs.appendFileSync(destinationFileName, lineObject.text + eol);
                 lineDeletes.push(i);
             }            
         }
@@ -71,6 +81,32 @@ export function archiveCompletedTasks() {
         deleteLines(lineDeletes, editor, currDoc);
         editor.selection = new vscode.Selection(new vscode.Position(0, 0), new vscode.Position(0, 0));
     }
+}
+
+function reactivateTask() {
+    const editor = vscode.window.activeTextEditor;
+    let currLine = editor.selection.start.line;
+    let currDoc = editor.document;
+
+    if (path.basename(currDoc.fileName) != AppConstants.ARCHIVE_FILENAME) {
+        vscode.window.showInformationMessage("Reactivate only available for the " + AppConstants.ARCHIVE_FILENAME + " file");
+        return;
+    }
+
+    /*
+     * Migrate the task to the main file
+     */
+    let destinationFileName = path.dirname(currDoc.fileName) + path.sep + AppConstants.TODO_FILENAME;
+    let lineObject = editor.document.lineAt(currLine);
+    let eol = determineEOL(vscode.window.activeTextEditor.document.eol);
+    let lineText = lineObject.text;
+    if (lineText.substring(0, 2).toLowerCase() == 'x ') {
+        lineText = lineText.substring(2);
+    }
+    fs.appendFileSync(destinationFileName, eol + lineText + eol);
+    let lineDeletes = [currLine];
+    deleteLines(lineDeletes, editor, currDoc);
+
 }
 
 function determineEOL(eolValue: vscode.EndOfLine): String {
@@ -82,12 +118,13 @@ function determineEOL(eolValue: vscode.EndOfLine): String {
 
 function deleteLines(lineDeletes: Number[], editor: vscode.TextEditor, doc: vscode.TextDocument) {
     let sortedLines = lineDeletes.reverse();
-
-    sortedLines.forEach(a => {
+    if (sortedLines.length > 0) {
         editor.edit(builder => {
-            builder.delete(doc.lineAt(a.valueOf()).rangeIncludingLineBreak);
-        })
-    })
+            sortedLines.forEach(a => {
+                builder.delete(doc.lineAt(a.valueOf()).rangeIncludingLineBreak);
+            })
+        }).then(()=>{});
+    }
 }
 
 function isTaskComplete(lineText: String): Boolean {
