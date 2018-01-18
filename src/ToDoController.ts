@@ -3,7 +3,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import { window } from 'vscode';
-import ToDoDecorator from './ToDoDecorator';
+import ToDoDecorator from './decorators/ToDoDecorator';
 
 export default class ToDoController {
 

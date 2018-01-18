@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
 import { window, Range } from 'vscode';
-import StyleConstants from './StyleConstants';
+import StyleConstants from '../utils/StyleConstants';
 import * as path from 'path';
-import AppConstants from './AppConstants';
+import AppConstants from '../utils/AppConstants';
 
 export default class ToDoDecorator {
 
@@ -13,11 +13,6 @@ export default class ToDoDecorator {
     completedDecorations: vscode.DecorationOptions[] = [];
     contextDecorations: vscode.DecorationOptions[] = [];
     activeEditor: vscode.TextEditor;
-
-    dateRegex = new RegExp(/\d{4}-\d{2}-\d{2}/g);
-    projectRegex = new RegExp(/\B\+\w+/g);
-    contextRegex = new RegExp(/\B\@\w+/g);
-    priorityRegex = new RegExp(/[(][A-Z][)]/g)
 
     private dateDecorationType = vscode.window.createTextEditorDecorationType({
 		light: {
@@ -94,10 +89,10 @@ export default class ToDoDecorator {
         /*
             Iterate over regexes and update all arrays
         */
-        this.parseRegex(this.dateRegex, this.dateDecorations, inputLine);
-        this.parseRegex(this.projectRegex, this.projectDecorations, inputLine);
-        this.parseRegex(this.contextRegex, this.contextDecorations, inputLine);
-        this.parseRegex(this.priorityRegex, this.priorityDecorations, inputLine);
+        this.parseRegex(AppConstants.DATE_REGEX, this.dateDecorations, inputLine);
+        this.parseRegex(AppConstants.PROJECT_REGEX, this.projectDecorations, inputLine);
+        this.parseRegex(AppConstants.CONTEXT_REGEX, this.contextDecorations, inputLine);
+        this.parseRegex(AppConstants.PRIORITY_REGEX, this.priorityDecorations, inputLine);
 
         if (inputLine.text.startsWith("x ") || inputLine.text.startsWith("X ")) {
             let decoration = { range: inputLine.range};

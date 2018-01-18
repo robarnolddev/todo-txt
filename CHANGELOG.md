@@ -4,9 +4,13 @@ All notable changes to the "todo-txt" extension will be documented in this file.
 
 todo-txt follows semantic versioning for all releases.
 
-## [0.0.3] - 2018-01-12
+## [0.0.5] - 2018-01-17
 
-Added basic command functionality for archiving tasks and completing tasks.
+Added sort command functionality to sort todo.txt by priority, project, context and due date
+
+## [0.0.3-0.0.4] - 2018-01-12
+
+Added basic command functionality for archiving tasks and completing tasks + bug fix
 
 ## [0.0.2] - 2018-01-10
 

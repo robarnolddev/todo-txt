@@ -4,7 +4,7 @@
 import * as vscode from 'vscode';
 import * as ToDoCommands from './ToDoCommands';
 import ToDoController from './ToDoController';
-import ToDoDecorator from './ToDoDecorator';
+import ToDoDecorator from './decorators/ToDoDecorator';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
