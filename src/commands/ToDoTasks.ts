@@ -3,10 +3,9 @@ import * as fs from 'fs';
 import * as path from 'path';
 import AppConstants from '../utils/AppConstants';
 import { TaskUtils } from '../utils/TaskUtils';
-import { ToDoSort } from '../commands/TodoSort';
 
 export namespace ToDoTasks {
-        
+
     export function toggleCompletedTasks() {
         // Get the current line and find the first 2 characters
         const editor = vscode.window.activeTextEditor;
@@ -44,7 +43,7 @@ export namespace ToDoTasks {
             // Only Decorate Document if it's in the classic filenaming convention
             let fileName = path.basename(window.activeTextEditor.document.fileName);
             let eol = TaskUtils.determineEOL(vscode.window.activeTextEditor.document.eol);
-            
+
             let totalLines = window.activeTextEditor.document.lineCount;
             for (var i = 0; i <= totalLines - 1; i++) {
                 let lineObject = window.activeTextEditor.document.lineAt(i);
@@ -52,7 +51,7 @@ export namespace ToDoTasks {
                 if (TaskUtils.isTaskComplete(currDoc.lineAt(i).text)) {
                     fs.appendFileSync(destinationFileName, lineObject.text + eol);
                     lineDeletes.push(i);
-                }            
+                }
             }
 
             TaskUtils.deleteLines(lineDeletes, editor, currDoc);

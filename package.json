@@ -2,7 +2,7 @@
     "name": "todo-txt",
     "displayName": "todo-txt",
     "description": "Todo.txt file management",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "publisher": "rarnoldmobile",
     "icon": "images/todo.png",
     "engines": {
@@ -44,6 +44,10 @@
             {
                 "command": "extension.sortContext",
                 "title": "todo-txt: Sort By Context"
+            },
+            {
+                "command": "extension.sortThreshold",
+                "title": "todo-txt: Sort By Threshold"
             }
         ]
     },
