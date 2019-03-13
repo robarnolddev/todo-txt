@@ -14,15 +14,27 @@ export namespace ToDoTasks {
 
         if (TaskUtils.isTaskComplete(currDoc.lineAt(currLine).text)) {
             editor.edit(builder => {
-                builder.delete(new vscode.Range(new vscode.Position(currLine, 0), new vscode.Position(currLine, 2)));
-                editor.selection = new vscode.Selection(new vscode.Position(currLine, 3), new vscode.Position(currLine, 3));
+                builder.delete(
+                    new vscode.Range(
+                        new vscode.Position(currLine, 0),
+                        new vscode.Position(currLine, 13)
+                    )
+                );
+                editor.selection = new vscode.Selection(
+                    new vscode.Position(currLine, 3),
+                    new vscode.Position(currLine, 3)
+                );
             })
         } else {
             editor.edit(builder => {
-                builder.insert(new vscode.Position(currLine, 0), "x ");
+                let completionDate = new Date().toISOString().slice(0, 10)
+                builder.insert(new vscode.Position(currLine, 0), `x ${completionDate} `);
             })
         }
-        editor.selection = new vscode.Selection(new vscode.Position(currLine, 0), new vscode.Position(currLine, 0));
+        editor.selection = new vscode.Selection(
+            new vscode.Position(currLine, 0),
+            new vscode.Position(currLine, 0)
+        );
     }
 
     export function bulkArchiveTasks() {
