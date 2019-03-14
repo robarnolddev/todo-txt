@@ -4,9 +4,13 @@ All notable changes to the "todo-txt" extension will be documented in this file.
 
 todo-txt follows semantic versioning for all releases.
 
+## [0.0.8] - 2019-03-14
+
+Added syntax highlight for threshold dates
+
 ## [0.0.7] - 2019-03-13
 
-Add completion date when toggle complete
+Added completion date when toggle complete
 
 ## [0.0.6] - 2019-03-13
 

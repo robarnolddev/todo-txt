@@ -13,6 +13,7 @@ export default class ToDoDecorator {
     completedDecorations: vscode.DecorationOptions[] = [];
     contextDecorations: vscode.DecorationOptions[] = [];
     thresholdDecorations: vscode.DecorationOptions[] = [];
+    pendingDecorations: vscode.DecorationOptions[] = [];
     activeEditor: vscode.TextEditor;
 
     private dateDecorationType = vscode.window.createTextEditorDecorationType({
@@ -73,6 +74,10 @@ export default class ToDoDecorator {
         }
     });
 
+    private pendingDecorationsType = vscode.window.createTextEditorDecorationType({
+        textDecoration: StyleConstants.THRESHOLD_CSS
+    })
+
     public decorateDocument() {
         // Clear all current decorations and set active editor
         this.clearAllDecorations();
@@ -100,7 +105,6 @@ export default class ToDoDecorator {
     }
 
     private parseLineObject(inputLine: vscode.TextLine) {
-
         /*
             Iterate over regexes and update all arrays
         */
@@ -115,6 +119,16 @@ export default class ToDoDecorator {
             let decoration = { range: inputLine.range };
             this.completedDecorations.push(decoration);
         }
+
+        let threshold: RegExpExecArray;
+        while (threshold = AppConstants.THRESHOLD_REGEX.exec(inputLine.text)) {
+            let thresholdDate = new Date(threshold[0])
+            let now = new Date()
+            if (thresholdDate > now) {
+                let decoration = { range: inputLine.range };
+                this.pendingDecorations.push(decoration);
+            }
+        }
     }
 
     private clearAllDecorations() {
@@ -124,6 +138,8 @@ export default class ToDoDecorator {
         this.contextDecorations = [];
         this.overdueDecorations = [];
         this.completedDecorations = [];
+        this.thresholdDecorations = [];
+        this.pendingDecorations = [];
     }
 
     private setDecorations() {
@@ -135,6 +151,7 @@ export default class ToDoDecorator {
         this.activeEditor.setDecorations(this.priorityDecorationType, this.priorityDecorations);
         this.activeEditor.setDecorations(this.overdueDecorationType, this.overdueDecorations);
         this.activeEditor.setDecorations(this.thresholdDecorationType, this.thresholdDecorations);
+        this.activeEditor.setDecorations(this.pendingDecorationsType, this.pendingDecorations);
     }
 
     private parseRegex(iRegExp: RegExp, decorationOptions: vscode.DecorationOptions[], inputLine: vscode.TextLine) {

@@ -30,5 +30,6 @@ export default class StyleConstants {
   public static readonly THRESHOLD_DARK = COLOR.TEAL_DARK;
   public static readonly THRESHOLD_LIGHT = COLOR.TEAL_LIGHT;
 
-  public static readonly COMPLETED_CSS = 'font-style: italic; text-decoration: line-through; opacity: 0.5;';
+  public static readonly COMPLETED_CSS = 'font-style: italic; text-decoration: line-through; opacity: 0.3;';
+  public static readonly THRESHOLD_CSS = 'font-style: italic; opacity: 0.3;';
 }
