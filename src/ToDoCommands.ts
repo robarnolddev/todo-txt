@@ -37,10 +37,16 @@ export function ActivateCommands(context: vscode.ExtensionContext) {
         ToDoSort.SortLines(ToDoSort.SortType.CONTEXT);
     });
 
+    let sortByThreshold = vscode.commands.registerCommand('extension.sortThreshold', () => {
+        ToDoSort.SortLines(ToDoSort.SortType.THRESHOLD);
+    });
+
     context.subscriptions.push(toggleCompletion);
     context.subscriptions.push(archiveTasks);
     context.subscriptions.push(reactivateCompletedTask);
     context.subscriptions.push(sortByProject);
+    context.subscriptions.push(sortByContext);
     context.subscriptions.push(sortByPriority);
     context.subscriptions.push(sortByDueDate);
+    context.subscriptions.push(sortByThreshold);
 }

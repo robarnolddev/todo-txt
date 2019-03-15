@@ -3,10 +3,9 @@ import * as fs from 'fs';
 import * as path from 'path';
 import AppConstants from '../utils/AppConstants';
 import { TaskUtils } from '../utils/TaskUtils';
-import { ToDoSort } from '../commands/TodoSort';
 
 export namespace ToDoTasks {
-        
+
     export function toggleCompletedTasks() {
         // Get the current line and find the first 2 characters
         const editor = vscode.window.activeTextEditor;
@@ -15,15 +14,27 @@ export namespace ToDoTasks {
 
         if (TaskUtils.isTaskComplete(currDoc.lineAt(currLine).text)) {
             editor.edit(builder => {
-                builder.delete(new vscode.Range(new vscode.Position(currLine, 0), new vscode.Position(currLine, 2)));
-                editor.selection = new vscode.Selection(new vscode.Position(currLine, 3), new vscode.Position(currLine, 3));
+                builder.delete(
+                    new vscode.Range(
+                        new vscode.Position(currLine, 0),
+                        new vscode.Position(currLine, 13)
+                    )
+                );
+                editor.selection = new vscode.Selection(
+                    new vscode.Position(currLine, 3),
+                    new vscode.Position(currLine, 3)
+                );
             })
         } else {
             editor.edit(builder => {
-                builder.insert(new vscode.Position(currLine, 0), "x ");
+                let completionDate = new Date().toISOString().slice(0, 10)
+                builder.insert(new vscode.Position(currLine, 0), `x ${completionDate} `);
             })
         }
-        editor.selection = new vscode.Selection(new vscode.Position(currLine, 0), new vscode.Position(currLine, 0));
+        editor.selection = new vscode.Selection(
+            new vscode.Position(currLine, 0),
+            new vscode.Position(currLine, 0)
+        );
     }
 
     export function bulkArchiveTasks() {
@@ -44,7 +55,7 @@ export namespace ToDoTasks {
             // Only Decorate Document if it's in the classic filenaming convention
             let fileName = path.basename(window.activeTextEditor.document.fileName);
             let eol = TaskUtils.determineEOL(vscode.window.activeTextEditor.document.eol);
-            
+
             let totalLines = window.activeTextEditor.document.lineCount;
             for (var i = 0; i <= totalLines - 1; i++) {
                 let lineObject = window.activeTextEditor.document.lineAt(i);
@@ -52,7 +63,7 @@ export namespace ToDoTasks {
                 if (TaskUtils.isTaskComplete(currDoc.lineAt(i).text)) {
                     fs.appendFileSync(destinationFileName, lineObject.text + eol);
                     lineDeletes.push(i);
-                }            
+                }
             }
 
             TaskUtils.deleteLines(lineDeletes, editor, currDoc);

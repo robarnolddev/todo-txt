@@ -24,6 +24,7 @@ The current command pallete is:
 - `todo-txt: Sort By Priority`: Sort the entire file by task priority
 - `todo-txt: Sort By Due Date`: Sort the entire file by due date
 - `todo-txt: Sort By Context`: Sort the entire file by context
+- `todo-txt: Sort By Threshold`: Sort the entire file by threshold
 
 Please see [todo.txt](http://todotxt.org) for full features and functionality of the todo.txt format.
 

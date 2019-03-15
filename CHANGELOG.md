@@ -4,6 +4,23 @@ All notable changes to the "todo-txt" extension will be documented in this file.
 
 todo-txt follows semantic versioning for all releases.
 
+## [0.0.9] - 2019-03-15
+
+Added sort by creation date after the primary sort. 
+Bug fixed
+
+## [0.0.8] - 2019-03-14
+
+Added syntax highlight for threshold dates
+
+## [0.0.7] - 2019-03-13
+
+Added completion date when toggle complete
+
+## [0.0.6] - 2019-03-13
+
+Added sort command functionality to sort todo.txt by threshold
+
 ## [0.0.5] - 2018-01-17
 
 Added sort command functionality to sort todo.txt by priority, project, context and due date
