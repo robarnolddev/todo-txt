@@ -4,6 +4,11 @@ All notable changes to the "todo-txt" extension will be documented in this file.
 
 todo-txt follows semantic versioning for all releases.
 
+## [0.0.9] - 2019-03-15
+
+Added sort by creation date after the primary sort. 
+Bug fixed
+
 ## [0.0.8] - 2019-03-14
 
 Added syntax highlight for threshold dates

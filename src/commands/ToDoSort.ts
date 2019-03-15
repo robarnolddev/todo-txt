@@ -58,10 +58,46 @@ export namespace ToDoSort {
             if (obj1[iKey.toString()] < obj2[iKey.toString()]) {
                 return -1;
             }
-            return 0;
+
+            return sortByCreation(obj1, obj2)
         });
 
         return sortedArray;
+    }
+
+    function sortByCreation(obj1: Object, obj2: Object): number {
+        let line1 = obj1['lineText']
+        let line2 = obj2['lineText']
+
+        let isBlank: number;
+        if ((isBlank = sortByBlank(line1, line2)) !== 0) {
+            return isBlank
+        }
+
+        let date1 = line1.slice(0, 10)
+        let date2 = line2.slice(0, 10)
+
+        if (date1 > date2) {
+            return 1
+        }
+
+        if (date1 < date2) {
+            return -1
+        }
+
+        return 0
+    }
+
+    function sortByBlank(line1: string, line2: string): number {
+        if (line1.length === 0) {
+            return 1
+        }
+
+        if (line2.length === 0) {
+            return -1
+        }
+
+        return 0
     }
 
     function deleteAndPopulate(editor: vscode.TextEditor, docObject: Array<Object>) {
